@@ -9,8 +9,9 @@
 
 //设置运行超时时间.
 set_time_limit(200);
-//设置内存大小
-ini_set("memory_limit","80M");
+// 程序允许使用内存大小
+ini_set('memory_limit', '56M');
+
 define('LARAVEL_START', microtime(true));
 
 /*

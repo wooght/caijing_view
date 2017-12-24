@@ -131,11 +131,11 @@
                   {
                       type: 'category',
                       data: data0.categoryData,
-                      scale: true,
-                      boundaryGap : false,
-                      axisLine: {onZero: false},
-                      splitLine: {show: false},
-                      splitNumber: 20,
+                      scale: true,  //是否脱离0值比例
+                      boundaryGap : false, //坐标轴留白
+                      axisLine: {onZero: false}, //坐标轴线相关设置
+                      splitLine: {show: false}, //是否显示分割标线
+                      splitNumber: 20, //坐标轴的分割段数
                       min: 'dataMin',
                       max: 'dataMax',
                   },
@@ -157,6 +157,10 @@
               yAxis: [
                   {
                       scale: true,
+                      boundaryGap:false,
+                      splitNumber:4,
+                      min: 'dataMin',
+                      max: 'dataMax',
                       splitArea: {
                           show: false   //在grid中的分割区域
                       }
@@ -705,10 +709,12 @@
             change_data = [];
             time_data = [];
             zd_data = [];
+            count_data = [];
             for(i=0;i<data.length;i++){
                 time_data.push(data[i][0]);
                 change_data.push(data[i][1]);
                 zd_data.push(data[i][2]);
+                count_data.push(data[i][3]);
             }
             option = {
                 title: {
@@ -727,31 +733,59 @@
                 dataZoom: [
                     {
                         type: 'inside',
+                        xAxisIndex:[0,1],
                         start: 70,
                         end: 100
                     },
                     {
                         show: true,
+                        xAxisIndex:[0,1],
                         type: 'slider',
                         top: '95%',
                         start: 70,
                         end: 100
                     }
                 ],
-                xAxis: {
-                    type: 'category',
-                    boundaryGap: false,
-                    data: time_data,
-                },
-                yAxis: [{
-                    type: 'value'
-                },{
-                    type:'value'
-                }
+                xAxis: [
+                    {type: 'category',boundaryGap: false,data: time_data},
+                    {type: 'category',data: time_data,gridIndex:1}
+                ],
+                yAxis: [
+                    {type:'value',gridIndex:0,scale: true,boundaryGap : true,axisLine: {onZero: false},splitLine: {show: false}},
+                    {type:'value',gridIndex:0,scale: true,boundaryGap : true,axisLine: {onZero: false},splitLine: {show: false}},
+                    {type:'value',gridIndex:1,splitLine:{show:false},splitNumber:2}
                 ],
                 legend: {
                     data: ['仓位','收盘']
                 },
+                //提示框组件。
+                tooltip: {
+                    trigger: 'axis',//触发类型 item 是指在散点图,饼图中触发,axis指在柱状图,折线图中触发,none指不触发
+                    axisPointer: {
+                        type: 'cross'//自动显示label
+                    }
+                },
+                //坐标指示器
+                axisPointer: {
+                    link: {xAxisIndex: 'all'},
+                    label: {
+                        backgroundColor: '#777'
+                    }
+                },
+                grid: [
+                    {
+                        left: '5%',
+                        right: '5%',
+                        height: '62%',
+                        top: '10%'
+                    },
+                    {
+                        left: '5%',
+                        right: '5%',
+                        bottom: '2%',
+                        height: '20%'
+                    }
+                ],
                 series: [
                     {
                         name:'仓位',
@@ -760,7 +794,7 @@
                         data:change_data,
                         yAxisIndex:1,
                         lineStyle: {
-                            normal: {opacity: 0.8}
+                            normal: {opacity: 0.8,color: 'red'}
                         }
                     },
                     {
@@ -772,6 +806,14 @@
                             normal: {opacity: 0.8}
                         }
                     },
+                    {
+                        name:'调仓数',
+                        type:'bar',
+                        stack:'调仓数',
+                        data:count_data,
+                        yAxisIndex:2,
+                        xAxisIndex:1
+                    }
                 ],
             };
             zuhe_charts.setOption(option);

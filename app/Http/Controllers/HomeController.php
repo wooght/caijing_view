@@ -13,19 +13,16 @@ use App\Model\domains;
 use App\Wooght\wfanye;
 use App\Model\listed_concept;
 
-// 程序允许使用内存大小
-ini_set('memory_limit', '256M');
-
 class HomeController extends Controller
 {
     public function index(){
-      $companys = listed_company::all()->count();
-      $plates = listed_plate::all()->count();
+      $companys = listed_company::count();
+      $plates = listed_plate::count();
       $region = listed_region::all()->count();
-      $quotes = quotes_item::all()->count();
-      $news = news::all()->count();
+      $quotes = quotes_item::count();
+      $news = news::count();
       $topic = topics::get(array('id'))->count();
-      $notices = company_notice::all()->count();
+      $notices = company_notice::count();
       //调用python 生成统计图片
       // $total_pic_arr = shell_exec("python F:\homestead\scripy_wooght\caijing_scrapy\caijing_scrapy/factory/pic/total_classfaly_pic.py ");
       $topic_classfaly = $this->total_classfaly(new topics);

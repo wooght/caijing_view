@@ -78,7 +78,7 @@
           </div>
     </div>
   </div>
-  <table width="100%"><tr>
+  <table width="100%" style="background-color:#fff;"><tr>
     <td width='50%'><div id="topic" style="width: 100%;height:400px;"></div></td>
     <td><div id="news" style="width: 100%;height:400px;"></div></td>
   </tr></table>
