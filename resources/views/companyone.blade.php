@@ -493,55 +493,59 @@
             time_data = [];
             zd_data = [];
             dk_data = [];
-            duo_data = [];
-            kong_data = [];
+            totalvolpct = [];
             for(i=0;i<data.length;i++){
                 time_data.push(data[i][0]);
                 zd_data.push(data[i][1]);
                 dk_data.push(parseFloat(data[i][2]));
-                duo_data.push(data[i][3]);
-                kong_data.push(data[i][4]);
+                totalvolpct.push(data[i][3]);
             }
             option = {
                 title: {
-                    text:'大单统计',
+                    text:'主力动向与行情关系',top:'0%',left:'2%'
                 },
                 tooltip : {
                     trigger: 'axis',
                     axisPointer : {            // 坐标轴指示器，坐标轴触发有效
-                        type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                        type : 'shadow',        // 默认为直线，可选为：'line' | 'shadow'
+                        type: 'cross'//自动显示label
                     }
                 },
                 legend: {
-                    data:[ '涨跌幅', '争夺','多头','空头']
+                    data:[ '收盘', '大单仓位','仓位比例']
                 },
-                grid: {
-                    left: '3%',
-                    right: '4%',
-                    bottom: '3%',
-                    containLabel: true
-                },
+                grid:[
+                    {
+                        left:'5%',right:'8%',bottom:'30%',height:'60%'
+                    },{
+                        left:'5%',right:'8%',bottom:'2%',height:'20%'
+                    }
+                ],
                 dataZoom: [
                     {
                         type: 'inside',
                         start: 70,
-                        end: 100
+                        end: 100,
+                        xAxisIndex:[0,1]
                     },
                     {
                         show: true,
                         type: 'slider',
                         top: '95%',
                         start: 70,
-                        end: 100
+                        end: 100,
+                        xAxisIndex:[0,1]
                     }
                 ],
                 yAxis : [
                     {
-                        type : 'value'
+                        type : 'value',scale:true,boundaryGap:false,
                     },
                     {
-                        type : 'value',
-                        axisTick :{show:true},
+                        type : 'value',scale:true,boundaryGap:false,
+                        axisTick :{show:false},
+                    },{
+                        type:'value',gridIndex:1,splitNumber:2,scale:true,boundaryGap:false,
                     }
                 ],
                 xAxis : [
@@ -549,52 +553,52 @@
                         type : 'category',
                         axisTick : {show: false},
                         data : time_data,
+                    },{
+                        type:'category',data:time_data,gridIndex:1
                     }
                 ],
+                //坐标指示器
+                axisPointer: {
+                    link: {xAxisIndex: 'all'},
+                    label: {
+                        backgroundColor: '#777'
+                    }
+                },
                 series : [
                     {
-                        name:'涨跌幅',
+                        name:'收盘',
                         type:'line',
-                        stack: '总量',
-                        yAxisIndex :1,
+                        stack:'收盘',
                         label: {
                             normal: {
-                                show: true,
-                                position: 'right'
+                                show: true,//是否显示值
+                                position: 'right'//显示值的位置
                             }
                         },
                         data:zd_data
                     },
                     {
-                        name:'争夺',
-                        type:'bar',
-                        stack:'总量',
+                        name:'大单仓位',
+                        type:'line',
+                        stack:'大单仓位',
+                        yAxisIndex :1,
                         label:{
                             normal:{
-                                show:true,
+                                show:false,
                                 position:'left'
                             }
                         },
                         data:dk_data
                     },
                     {
-                        name:'多头',
+                        name:'仓位比例',
                         type:'bar',
-                        stack:'总量',
-                        data:duo_data,
+                        stack:'占总量',
+                        data:totalvolpct,
+                        xAxisIndex:1,
+                        yAxisIndex:2,
                         itemStyle: {
                             normal: {opacity: 0.8}
-                        }
-                    },
-                    {
-                        name:'空头',
-                        type:'bar',
-                        stack:'总量',
-                        data:kong_data,
-                        itemStyle:{
-                            normal:{
-                                opacity:0.8
-                            }
                         }
                     },
                 ]
@@ -718,14 +722,8 @@
             }
             option = {
                 title: {
-                    text: '组合调仓记录',
+                    text: '组合调仓与行情关系',
                     left: '2%'
-                },
-                grid: {
-                    left: '3%',
-                    right: '4%',
-                    bottom: '3%',
-                    containLabel: true
                 },
                 tooltip: {
                     trigger: 'axis'

@@ -9,23 +9,23 @@ use App\Model\zuhe_change;
 class DateControl extends Controller
 {
     public function topic($id){
-        $data = shell_exec("python F:\homestead\scripy_wooght\caijing_scrapy\caijing_scrapy/factory/data/topic_attitude.py ".$id);
+        $data = shell_exec("python3 /home/vagrant/www/scripy_wooght/caijing_scrapy/caijing_scrapy/factory/data/topic_attitude.py ".$id);
         return $data;
     }
     public function quotes($id){
-        $data = shell_exec("python F:\homestead\scripy_wooght\caijing_scrapy\caijing_scrapy/factory/data/quotes_data.py ".$id);
+        $data = shell_exec("python3 /home/vagrant/www/scripy_wooght/caijing_scrapy/caijing_scrapy/factory/data/quotes_data.py ".$id);
         return $data;
     }
     public function attitudes($id){
-        $data = shell_exec("python F:\homestead\scripy_wooght\caijing_scrapy\caijing_scrapy/factory/data/attitude_nums.py ".$id);
+        $data = shell_exec("python3 /home/vagrant/www/scripy_wooght/caijing_scrapy/caijing_scrapy/factory/data/attitude_nums.py ".$id);
         return $data;
     }
     public function ddtj($id){
-        $data = shell_exec("python F:\homestead\scripy_wooght\caijing_scrapy\caijing_scrapy/factory/data/ddtj_data.py ".$id);
+        $data = shell_exec("python3 /home/vagrant/www/scripy_wooght/caijing_scrapy/caijing_scrapy/factory/data/ddtj_data.py ".$id);
         return $data;
     }
     public function zuhe_change($id){
-        $data = shell_exec("python F:\homestead\scripy_wooght\caijing_scrapy\caijing_scrapy/factory/data/zuhe_change.py ".$id);
+        $data = shell_exec("python3 /home/vagrant/www/scripy_wooght/caijing_scrapy/caijing_scrapy/factory/data/zuhe_change.py ".$id);
         return $data;
     }
     public function redian_list(){
