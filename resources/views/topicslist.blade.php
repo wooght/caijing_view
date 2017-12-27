@@ -23,7 +23,7 @@
                     <tr>
                       <td>{{$one->id}}</td>
                       <td><a href="{{$one->url}}" target="_blank">{{$one->url}}</a></td>
-                      <td><span class="badge bg-blue">{{$one->title}}</span></td>
+                      <td><a href="/article_analyes/{{$one->id}}"><span class="badge bg-blue">{{$one->title}}</span></a></td>
                       <td>{{$one->Attitudes()->where('article_type','=','1')->count()}}</td>
                       <td>{{date('Y-m-d',$one->put_time)}}</td>
                     </tr>

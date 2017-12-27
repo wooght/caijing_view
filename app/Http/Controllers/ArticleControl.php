@@ -33,4 +33,8 @@ class ArticleControl extends HomeController
         $newslist = $models->orderBy('put_time','desc')->skip($pageid*$pt-$pt)->take($pt)->get();
         return array($fy,$newslist);
     }
+    //文章分析详情展示页
+    public function article_analyes($id){
+        return view('article_analyes')->withId($id);
+    }
 }

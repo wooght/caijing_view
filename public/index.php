@@ -6,7 +6,7 @@
  * @package  Laravel
  * @author   Taylor Otwell <taylor@laravel.com>
  */
-
+header("Content-type:text/html;charset=utf-8");
 //设置运行超时时间.
 set_time_limit(200);
 // 程序允许使用内存大小

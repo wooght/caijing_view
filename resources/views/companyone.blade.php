@@ -289,7 +289,6 @@
   }
 
     /**
-     * echarts 双变量线图
      * 涨跌幅，舆论评价
      * 异步加载数据
      */
@@ -302,9 +301,13 @@
           zd_data = [];
           topic_data = [];
           news_data = [];
+          news_count = [];
+          topic_count = [];
           for(i=0;i<data.length;i++){
               time_data.push(data[i][0]);
               zd_data.push(data[i][1]);
+              topic_count.push(data[i][4]);
+              news_count.push(data[i][5]);
               topic = parseFloat(data[i][2]);
               if(topic<0.5 & topic!=0){
                   topic_data.push(topic-1);
@@ -320,49 +323,75 @@
           }
           option = {
               title: {
-                  text: '涨跌幅-舆论层叠',
+                  text: '舆情状态',
                   left: '2%'
               },
-              grid: {
+              grid: [{
                   left: '3%',
-                  right: '4%',
+                  right: '2%',
+                  bottom: '30%',
+                  containLabel: false,//区域是否包含刻度标签
+                  height: '60%'
+              },{
+                  left: '3%',
+                  right: '2%',
                   bottom: '3%',
-                  containLabel: true
-              },
+                  containLabel: false,
+                  height: '25%'
+              }],
               tooltip: {
-                  trigger: 'axis'
+                  trigger: 'axis',
+                  axisPointer: {
+                      type: 'cross'//自动显示label
+                  }
+              },
+              //坐标指示器
+              axisPointer: {
+                  link: {xAxisIndex: 'all'},
+                  label: {
+                      backgroundColor: '#777'
+                  }
               },
               //区域缩放组件x,x1
               dataZoom: [
                   {
                       type: 'inside',
                       start: 70,
-                      end: 100
+                      end: 100,
+                      xAxisIndex:[0,1]
                   },
-                  {
-                      show: true,
-                      type: 'slider',
-                      top: '95%',
-                      start: 70,
-                      end: 100
-                  }
               ],
-              xAxis: {
+              xAxis: [{
                   type: 'category',
                   boundaryGap: false,
                   data: time_data,
-              },
-              yAxis: {
-                  type: 'value'
-              },
+              },{
+                  type: 'category',
+                  data: time_data,
+                  gridIndex:1,boundaryGap: false,
+                  axisTick : {show: true}, //坐标轴刻度设置
+                  axisLabel: {show:true}, //坐标轴标签设置
+              }],
+              yAxis: [{
+                  type: 'value',
+                  scale: true,  //是否脱离0值比例
+                  boundaryGap : false, //坐标轴留白
+              },{
+                  type: 'value',
+                  splitLine:{show:false,},
+                  axisLabel:{show:false},axisTick:{show:false}
+              },{
+                  type: 'value',
+                  gridIndex:1,splitLine:{show:false},splitNumber:2
+              }],
               legend: {
                   data: ['涨跌幅', '舆论评价', '新闻评价']
               },
               series: [
                   {
-                      name:'涨跌幅',
+                      name:'收盘',
                       type:'line',
-                      stack: '涨跌幅',
+                      stack: '收盘',
                       data:zd_data,
                       lineStyle: {
                           normal: {opacity: 0.2}
@@ -370,16 +399,32 @@
                   },
                   {
                       name:'舆论评价',
-                      type:'line',
-                      stack: '舆论评价',
+                      type:'bar',
                       data:topic_data,
+                      stack:'attitude',
+                      xAxisIndex:1,
+                      yAxisIndex:2,
                   },
                   {
                       name:'新闻评价',
-                      type:'line',
-                      stack:'新闻评价',
+                      type:'bar',
                       data:news_data,
-                  },
+                      stack:'attitude',
+                      xAxisIndex:1,
+                      yAxisIndex:2,
+                  },{
+                      name:'评论量',
+                      type:'bar',
+                      data:topic_count,
+                      yAxisIndex:1,
+                      stack:'liang' //分组,分开显示还是重叠显示取决于是否有相同的stack
+                  },{
+                      name:'新闻量',
+                      type:'bar',
+                      data:news_count,
+                      stack:'liang',
+                      yAxisIndex:1
+                  }
               ]
           };
           topic_charts.setOption(option);
@@ -544,6 +589,7 @@
                     {
                         type : 'value',scale:true,boundaryGap:false,
                         axisTick :{show:false},
+                        splitLine:{show:false,}
                     },{
                         type:'value',gridIndex:1,splitNumber:2,scale:true,boundaryGap:false,
                     }
@@ -582,10 +628,9 @@
                         type:'line',
                         stack:'大单仓位',
                         yAxisIndex :1,
-                        label:{
+                        lineStyle:{
                             normal:{
-                                show:false,
-                                position:'left'
+                                color:'#777'
                             }
                         },
                         data:dk_data
@@ -598,7 +643,7 @@
                         xAxisIndex:1,
                         yAxisIndex:2,
                         itemStyle: {
-                            normal: {opacity: 0.8}
+                            normal: {opacity: 1,color:'#f77'}
                         }
                     },
                 ]
@@ -792,8 +837,8 @@
                         data:change_data,
                         yAxisIndex:1,
                         lineStyle: {
-                            normal: {opacity: 0.8,color: 'red'}
-                        }
+                            normal: {opacity: 0.8,color:'#777'}
+                        },
                     },
                     {
                         name:'收盘',
@@ -801,7 +846,13 @@
                         stack: '收盘',
                         data:zd_data,
                         lineStyle: {
-                            normal: {opacity: 0.8}
+                            normal: {opacity: 0.8,color: 'red'}
+                        },
+                        label:{
+                            normal:{
+                                show:true,
+                                position:'right'
+                            }
                         }
                     },
                     {

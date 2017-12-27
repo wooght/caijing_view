@@ -28,3 +28,4 @@ Route::get('/concept_list/id/{id}/page/{page}','HomeController@concept_list');
 Route::get('/news_list/page/{pageid}','ArticleControl@news_list');
 Route::get('/topics_list/page/{pageid}','ArticleControl@topics_list');
 Route::get('/redian_list','DateControl@redian_list');
+Route::get('/article_analyes/{id}','ArticleControl@article_analyes');

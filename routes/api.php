@@ -21,3 +21,4 @@ Route::get('/attitudedata/quotes/{id}','DateControl@quotes');
 Route::get('/attitudedata/attitudes/{id}','DateControl@attitudes');
 Route::get('/ddtj/{id}','DateControl@ddtj');
 Route::get('/zuhe_change/{id}','DateControl@zuhe_change');
+Route::get('/article_analyes/{id}','DateControl@article_analyes');
