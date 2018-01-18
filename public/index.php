@@ -10,7 +10,7 @@ header("Content-type:text/html;charset=utf-8");
 //设置运行超时时间.
 set_time_limit(200);
 // 程序允许使用内存大小
-ini_set('memory_limit', '56M');
+ini_set('memory_limit', '256M');
 
 define('LARAVEL_START', microtime(true));
 

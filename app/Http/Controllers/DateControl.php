@@ -22,7 +22,7 @@ class DateControl extends Controller
         return $data;
     }
     public function ddtj($id){
-        $data = shell_exec($this->path."ddtj_data.py ".$id);
+        $data = shell_exec($this->path."ddtj_analyse.py ".$id);
         return $data;
     }
     public function zuhe_change($id){
@@ -36,6 +36,7 @@ class DateControl extends Controller
         $m = new attitude_relation;
         $last_times = time()-24*3600;
         $last_times5 = time()-5*24*3600;
+        // selectRaw 拥有as功能
         $news = $m->selectRaw('code_id,count(code_id) as countt')->where('put_time','>',$last_times)->where('article_type','=','2')->groupby('code_id')->orderby('countt','desc')->skip(0)->take(20)->get();
         $topic = $m->selectRaw('code_id,count(code_id) as countt')->where('put_time','>',$last_times)->where('article_type','=','1')->groupby('code_id')->orderby('countt','desc')->skip(0)->take(20)->get();
 

@@ -67,9 +67,9 @@
           var upBorderColor = '#8A0000';
           var downColor = '#00da3c';
           var downBorderColor = '#008F28';
-          str_start = data.indexOf('========>>>>>>>>>>')
+          str_start = data.indexOf('保存中.....')
           if(str_start>0){
-              data1 = data.split('========>>>>>>>>>>')
+              data1 = data.split('保存中.....')
               data = data1[1]
           }
           // 数据意义：开盘(open)，收盘(close)，最低(lowest)，最高(highest)
@@ -534,16 +534,34 @@
     function get_ddtj(){
         _ajax.get('','{{URL('api/ddtj/'.$code_id)}}',function (data){
             ddtj = echarts.init(__('ddtj'));
-            data = eval(data);
+            d = eval('('+data+')');
+            data = d.dd_data;
+            hc = d.hc;
             time_data = [];
             zd_data = [];
             dk_data = [];
             totalvolpct = [];
+            hc_data = [];
             for(i=0;i<data.length;i++){
                 time_data.push(data[i][0]);
                 zd_data.push(data[i][1]);
                 dk_data.push(parseFloat(data[i][2]));
                 totalvolpct.push(data[i][3]);
+            }
+            for(i=0;i<hc.length;i++){
+                hc_data.push([
+                    {
+                        name: hc[i][2],
+                        coord: hc[i][0],
+                        symbol: 'circle',
+                        symbolSize: 10,
+                    },
+                    {
+                        coord: hc[i][1],
+                        symbol: 'circle',
+                        symbolSize: 10,
+                    }
+                ])
             }
             option = {
                 title: {
@@ -618,10 +636,15 @@
                         label: {
                             normal: {
                                 show: true,//是否显示值
-                                position: 'right'//显示值的位置
+                                position: 'left'//显示值的位置
                             }
                         },
-                        data:zd_data
+                        data:zd_data,
+                        // 标线
+                        markLine: {
+                            symbol: ['none', 'none'],
+                            data: hc_data,
+                        }
                     },
                     {
                         name:'大单仓位',

@@ -17,24 +17,25 @@ class HomeController extends Controller
 {
     public function index(){
       $companys = listed_company::count();
-      $plates = listed_plate::count();
-      $region = listed_region::all()->count();
-      $quotes = quotes_item::count();
-      $news = news::count();
-      $topic = topics::get(array('id'))->count();
+      $plates = listed_plate::all()->count();
+      $region = listed_region::count();
+      $quotes = quotes_item::get(array('id'))->count();
+      $model_news = news::get(['url']);
+      $news = $model_news->count();
+      $model_topic = topics::get(['url']);
+      $topic = $model_topic->count();
       $notices = company_notice::count();
       //调用python 生成统计图片
       // $total_pic_arr = shell_exec("python F:\homestead\scripy_wooght\caijing_scrapy\caijing_scrapy/factory/pic/total_classfaly_pic.py ");
-      $topic_classfaly = $this->total_classfaly(new topics);
-      $news_classfaly = $this->total_classfaly(new news);
+      $topic_classfaly = $this->total_classfaly($model_topic);
+      $news_classfaly = $this->total_classfaly($model_news);
       return view('welcome',compact('companys','plates','region','quotes','news','topic','notices','topic_classfaly','news_classfaly'));
     }
 
     public function total_classfaly($table){
-      $all = $table->get(array('url'));
       $domains = $this->select_domains();
       $url = array();
-      foreach($all as $item){
+      foreach($table as $item){
         foreach($domains as $key){
           if(strpos($item,$key)){
             if(!array_key_exists($key,$url)){

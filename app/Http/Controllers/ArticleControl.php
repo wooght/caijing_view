@@ -30,7 +30,7 @@ class ArticleControl extends HomeController
         $idlist = $models->get(['id']);
         $fyobj = new wfanye($pageid,$idlist->count(),"$url",$pt,10);
         $fy = $fyobj->show();
-        $newslist = $models->orderBy('put_time','desc')->skip($pageid*$pt-$pt)->take($pt)->get();
+        $newslist = $models->orderBy('put_time','desc')->skip($pageid*$pt-$pt)->take($pt)->get(array('id','title','put_time','url'));
         return array($fy,$newslist);
     }
     //文章分析详情展示页
