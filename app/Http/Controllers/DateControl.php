@@ -22,7 +22,7 @@ class DateControl extends Controller
         return $data;
     }
     public function ddtj($id){
-        $data = shell_exec($this->path."ddtj_analyse.py ".$id);
+        $data = shell_exec($this->path."ddtj_data.py ".$id);
         return $data;
     }
     public function zuhe_change($id){
@@ -37,22 +37,33 @@ class DateControl extends Controller
         $last_times = time()-24*3600;
         $last_times5 = time()-5*24*3600;
         // selectRaw 拥有as功能
-        $news = $m->selectRaw('code_id,count(code_id) as countt')->where('put_time','>',$last_times)->where('article_type','=','2')->groupby('code_id')->orderby('countt','desc')->skip(0)->take(20)->get();
-        $topic = $m->selectRaw('code_id,count(code_id) as countt')->where('put_time','>',$last_times)->where('article_type','=','1')->groupby('code_id')->orderby('countt','desc')->skip(0)->take(20)->get();
+        $news = $m->selectRaw('code_id,count(code_id) as countt')->where('put_time','>',$last_times)->where('article_type','=','2')->groupby('code_id')->orderby('countt','desc')->skip(0)->take(30)->get();
+        $topic = $m->selectRaw('code_id,count(code_id) as countt')->where('put_time','>',$last_times)->where('article_type','=','1')->groupby('code_id')->orderby('countt','desc')->skip(0)->take(30)->get();
 
-        $news5 = $m->selectRaw('code_id,count(code_id) as countt')->where('put_time','>',$last_times5)->where('article_type','=','2')->groupby('code_id')->orderby('countt','desc')->skip(0)->take(20)->get();
-        $topic5 = $m->selectRaw('code_id,count(code_id) as countt')->where('put_time','>',$last_times5)->where('article_type','=','1')->groupby('code_id')->orderby('countt','desc')->skip(0)->take(20)->get();
-
+        $news5 = $m->selectRaw('code_id,count(code_id) as countt')->where('put_time','>',$last_times5)->where('article_type','=','2')->groupby('code_id')->orderby('countt','desc')->skip(0)->take(30)->get();
+        $topic5 = $m->selectRaw('code_id,count(code_id) as countt')->where('put_time','>',$last_times5)->where('article_type','=','1')->groupby('code_id')->orderby('countt','desc')->skip(0)->take(30)->get();
+        return view('redian_list',compact('news','topic','news5','topic5','zh_count','zh_up5','zh_down','zh_down5'));
+    }
+    public function zuhe_change_list(){
         $z = new zuhe_change;
+        $last_times = time()-24*3600;
+        $last_times5 = time()-5*24*3600;
         $zh_count = $z->selectRaw('code_id,sum(change_status) as countt')->where('updated_at','>',$last_times*1000)->groupby('code_id')->orderby('countt','desc')->skip(0)->take(30)->get();
         $zh_up5 = $z->selectRaw('code_id,sum(change_status) as countt')->where('updated_at','>',$last_times5*1000)->groupby('code_id')->orderby('countt','desc')->skip(0)->take(30)->get();
         $zh_down = $z->selectRaw('code_id,sum(change_status) as countt')->where('updated_at','>',$last_times*1000)->groupby('code_id')->orderby('countt')->skip(0)->take(30)->get();
         $zh_down5 = $z->selectRaw('code_id,sum(change_status) as countt')->where('updated_at','>',$last_times5*1000)->groupby('code_id')->orderby('countt')->skip(0)->take(30)->get();
-        return view('redian_list',compact('news','topic','news5','topic5','zh_count','zh_up5','zh_down','zh_down5'));
+        return view('zuhe_change_list',compact('zh_count','zh_up5','zh_down','zh_down5'));
     }
     //php python 中文通讯   python输出utf-8编码字符 phpurldecode反编码
     public function article_analyes($id){
         $data = shell_exec($this->path."semantics.py ".$id);
+        $data = urldecode(str_replace('\x','%',$data));
+        $data = urldecode(str_replace("b'","'",$data));
+        return $data;
+    }
+    // 大单top100
+    public function ddtop100(){
+        $data = shell_exec($this->path."ddtop100.py ");
         $data = urldecode(str_replace('\x','%',$data));
         $data = urldecode(str_replace("b'","'",$data));
         return $data;

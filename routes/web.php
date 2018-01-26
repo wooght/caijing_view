@@ -27,5 +27,8 @@ Route::get('/concept_list/id/{id}','HomeController@concept_list');
 Route::get('/concept_list/id/{id}/page/{page}','HomeController@concept_list');
 Route::get('/news_list/page/{pageid}','ArticleControl@news_list');
 Route::get('/topics_list/page/{pageid}','ArticleControl@topics_list');
+Route::get('/article_data','ArticleControl@article_data');
 Route::get('/redian_list','DateControl@redian_list');
+Route::get('/zuhe_change_list','DateControl@zuhe_change_list');
 Route::get('/article_analyes/{id}','ArticleControl@article_analyes');
+Route::get('/ddtop100_list','HomeController@ddtop100_list');

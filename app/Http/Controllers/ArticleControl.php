@@ -25,6 +25,9 @@ class ArticleControl extends HomeController
         list($fy,$newslist) = $this->select_article($pageid,new topics,'/topics_list');
         return view('topicslist',compact('fy'))->withList($newslist);
     }
+    public function article_data(){
+        return view('article_data');
+    }
     public function select_article($pageid,$models,$url){
         $pt = 20;
         $idlist = $models->get(['id']);

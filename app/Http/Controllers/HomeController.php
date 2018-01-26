@@ -116,6 +116,10 @@ class HomeController extends Controller
       $region = $this->region;
       return view('concept_index',compact('id','platelist','fy','plates','region'))->withList($at['at_list']);
     }
+    //大单top100列表
+    public function ddtop100_list(){
+        return view('ddtop100');
+    }
 
     //查询上市公司列表
     public function select_company($regionid=0,$plateid=0,$conceptid=0,$page=0,$pt){
