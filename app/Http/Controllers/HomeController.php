@@ -120,6 +120,10 @@ class HomeController extends Controller
     public function ddtop100_list(){
         return view('ddtop100');
     }
+    //大单回测数据
+    public function ddbackprobe(){
+        return view('ddbackprobe');
+    }
 
     //查询上市公司列表
     public function select_company($regionid=0,$plateid=0,$conceptid=0,$page=0,$pt){

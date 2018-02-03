@@ -32,3 +32,4 @@ Route::get('/redian_list','DateControl@redian_list');
 Route::get('/zuhe_change_list','DateControl@zuhe_change_list');
 Route::get('/article_analyes/{id}','ArticleControl@article_analyes');
 Route::get('/ddtop100_list','HomeController@ddtop100_list');
+Route::get('/ddbackprobe','HomeController@ddbackprobe');

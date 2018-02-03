@@ -10,7 +10,7 @@
 @section('content')
 <section style="margin:auto; padding-top:20px; background-color:#fff;" class="content container-fluid">
   <table border='1' width="100%"><tr>
-    <td align="center" valign="middle"><div id="ddtop100" style="width: 100%;height:800px;"><img src="/pic/loading.gif"></div></td>
+    <td align="center" valign="middle"><div id="ddtop100" style="width: 100%;height:1200px;"><img src="/pic/loading.gif"></div></td>
   </table>
   <script src="{{asset("js/echarts.js")}}"></script>
   <script type="text/javascript">
@@ -68,13 +68,24 @@
             type: 'category',
             data: namedata,
             gridIndex: 1
-        }
-        ],
+        }],
+        //坐标指示器
+        axisPointer: {
+            link: {yAxisIndex: 'all'},
+            label: {
+                backgroundColor: '#777'
+            }
+        },
         series: [
             {
                 name: '末日',
                 type: 'bar',
                 data: valuedata,
+                itemStyle: {
+                    normal:{
+                        color: 'red'
+                    }
+                }
             },{
                 name: '状态',
                 type: 'bar',
@@ -84,7 +95,12 @@
             },{
                 name: '平均',
                 type: 'bar',
-                data: pctdata
+                data: pctdata,
+                itemStyle:{
+                    normal: {
+                        color: '#777'
+                    }
+                }
             }
         ],
     };

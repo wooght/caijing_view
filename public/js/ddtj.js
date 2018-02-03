@@ -138,7 +138,8 @@ function get_ddtj(url){
                     },
                     lineStyle:{
                         normal:{
-                            opacity: 0.5
+                            opacity: 0.3,
+                            color: 'green',
                         }
                     }
                 },

@@ -23,3 +23,4 @@ Route::get('/ddtj/{id}','DateControl@ddtj');
 Route::get('/zuhe_change/{id}','DateControl@zuhe_change');
 Route::get('/article_analyes/{id}','DateControl@article_analyes');
 Route::get('/ddtop100','DateControl@ddtop100');
+Route::get('/ddbackprobe','DateControl@ddbackprobe');

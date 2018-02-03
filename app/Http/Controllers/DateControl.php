@@ -68,4 +68,11 @@ class DateControl extends Controller
         $data = urldecode(str_replace("b'","'",$data));
         return $data;
     }
+    // 大单回测数据
+    public function ddbackprobe(){
+        $data = shell_exec($this->path."dd_backprobe.py ");
+        $data = urldecode(str_replace('\x','%',$data));
+        $data = urldecode(str_replace("b'","'",$data));
+        return $data;
+    }
 }

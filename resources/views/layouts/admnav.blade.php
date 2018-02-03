@@ -48,6 +48,18 @@
               <li><a href="{{URL('topics_list/page/1')}}"><i class="fa fa-circle-o">机构分析</i></a></li>
             </ul>
         </li>
+        <li class="treeview active menu-open">
+            <a href="#">
+              <i class="fa fa-pie-chart"></i>
+              <span>回测数据</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+                <li><a href="{{URL('ddbackprobe')}}"><i class="fa fa-circle-o">大单回测</i></a></li>
+            </ul>
+        </li>
         <li class="header">爬虫管理</li>
         <li class="treeview active menu-open">
             <a href="#">
