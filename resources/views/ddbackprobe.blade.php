@@ -11,7 +11,8 @@
 <section style="margin:auto; padding-top:20px; background-color:#fff;" class="content container-fluid">
     <h1 id = 'strategy'></h1>
     <span id="total_income" style="font-size:18px; color:red;">总收益:</span>--<span id='total_jia' style="font-size:18px; color:red;">建仓数:</span>----
-    <span id="total_ycome" style="font-size:18px; color:red;">盈利:</span>--<span id="total_kcome" style="font-size:18px; color:green;">亏损:</span>
+    <span id="total_ycome" style="font-size:18px; color:red;">盈利:</span>--<span id="total_kcome" style="font-size:18px; color:green;">亏损:</span>----
+    <span id="total_ycodes">盈利股:</span><span id="total_kcodes">亏损股:</span>
   <table border='1' width="100%"><tr>
     <td align="center" valign="middle"><div id="ddbackprobe" style="width: 100%;height:3000px;"><img src="/pic/loading.gif"></div></td>
   </table>
@@ -30,6 +31,8 @@
       __('strategy').innerHTML += data['strategy']
       __('total_ycome').innerHTML += data['total_ycome']
       __('total_kcome').innerHTML += data['total_kcome']
+      __('total_ycodes').innerHTML += data['total_ycodes']
+      __('total_kcodes').innerHTML += data['total_kcodes']
       for(i=0;i<d.length;i++){
           namedata.push([d[i]['name'], d[i]['id']])
           incomedata.push(d[i]['income'])
