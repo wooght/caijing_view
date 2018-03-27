@@ -9,6 +9,11 @@ class DateControl extends Controller
 {
     // public $path = 'python F:\homestead\scripy_wooght\caijing_scrapy\factory\data/';
     public $path = 'python3 /home/vagrant/www/scripy_wooght/caijing_scrapy/factory/data/';
+    // 首页文章统计
+    public function article_nums(){
+        $data = shell_exec($this->path.'article_nums.py');
+        return $data;
+    }
     public function topic($id){
         $data = shell_exec($this->path."topic_attitude.py ".$id);
         return $data;

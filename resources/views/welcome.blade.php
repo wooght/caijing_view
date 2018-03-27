@@ -79,8 +79,8 @@
     </div>
   </div>
   <table width="100%" style="background-color:#fff;"><tr>
-    <td width='50%'><div id="topic" style="width: 100%;height:400px;"></div></td>
-    <td><div id="news" style="width: 100%;height:400px;"></div></td>
+    <td width='50%'><div id="topic" style="width: 100%;height:400px;"><img src="/pic/loading.gif"></div></td>
+    <td><div id="news" style="width: 100%;height:400px;"><img src="/pic/loading.gif"></div></td>
   </tr></table>
   <script src="{{asset("js/echarts.js")}}"></script>
   <script type="text/javascript">
@@ -122,30 +122,25 @@
     };
     return option;
   }
-  topicname = [
-    @foreach($topic_classfaly as $key=>$val)
-    '{{$key}}',
-    @endforeach
-  ]
-  topicvalue = [
-    @foreach($topic_classfaly as $key=>$val)
-    '{{$val}}',
-    @endforeach
-  ]
-  newsname = [
-    @foreach($news_classfaly as $key=>$val)
-    '{{$key}}',
-    @endforeach
-  ]
-  newsvalue = [
-    @foreach($news_classfaly as $key=>$val)
-    '{{$val}}',
-    @endforeach
-  ]
-  topicoption = get_option('topic统计',topicname,topicvalue);
-  newsoption = get_option('news统计',newsname,newsvalue);
-  topicchart.setOption(topicoption);
-  newchart.setOption(newsoption);
+  $.get('{{URL('api/article_nums')}}',function (data){
+      data = eval("("+data+")")
+      topicname = []
+      topicvalue = []
+      newsname = []
+      newsvalue = []
+      for(i in data[0]){
+          topicname.push(i)
+          topicvalue.push(data[0][i])
+      }
+      for(i in data[1]){
+          newsname.push(i)
+          newsvalue.push(data[1][i])
+      }
+      topicoption = get_option('topic统计',topicname,topicvalue);
+      newsoption = get_option('news统计',newsname,newsvalue);
+      topicchart.setOption(topicoption);
+      newchart.setOption(newsoption);
+  })
   </script>
   <!-- <table width="100%" align="center">
     <tr>

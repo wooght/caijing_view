@@ -27,9 +27,9 @@ class HomeController extends Controller
       $notices = company_notice::count();
       //调用python 生成统计图片
       // $total_pic_arr = shell_exec("python F:\homestead\scripy_wooght\caijing_scrapy\caijing_scrapy/factory/pic/total_classfaly_pic.py ");
-      $topic_classfaly = $this->total_classfaly($model_topic);
-      $news_classfaly = $this->total_classfaly($model_news);
-      return view('welcome',compact('companys','plates','region','quotes','news','topic','notices','topic_classfaly','news_classfaly'));
+      // $topic_classfaly = $this->total_classfaly($model_topic);
+      // $news_classfaly = $this->total_classfaly($model_news);
+      return view('welcome',compact('companys','plates','region','quotes','news','topic','notices'));
     }
 
     public function total_classfaly($table){
